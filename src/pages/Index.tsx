@@ -4,8 +4,12 @@ import AboutSection from '@/components/AboutSection';
 import EventsSection from '@/components/EventsSection';
 import TeamSection from '@/components/TeamSection';
 import Footer from '@/components/Footer';
+import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 
 const Index = () => {
+  // Initialize Lenis smooth scrolling
+  useSmoothScroll();
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
