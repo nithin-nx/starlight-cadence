@@ -14,7 +14,6 @@ const ContactPage: React.FC = () => {
       
       <main className="pt-32 pb-20">
         <div className="container mx-auto px-6">
-          {/* Page Header */}
           <ScrollReveal className="text-center mb-16">
             <span className="inline-block px-4 py-2 text-xs font-medium tracking-[0.3em] uppercase text-primary border border-primary/30 rounded-full bg-primary/5 mb-4">
               Contact
@@ -28,7 +27,6 @@ const ContactPage: React.FC = () => {
           </ScrollReveal>
 
           <div className="grid lg:grid-cols-2 gap-16">
-            {/* Contact Info */}
             <ScrollReveal>
               <div className="space-y-8">
                 <div className="glass-card p-6">
@@ -75,7 +73,6 @@ const ContactPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Social Links */}
                 <div className="glass-card p-6">
                   <h3 className="font-orbitron font-semibold text-foreground mb-4">Follow Us</h3>
                   <div className="flex gap-3">
@@ -102,7 +99,6 @@ const ContactPage: React.FC = () => {
               </div>
             </ScrollReveal>
 
-            {/* Contact Form */}
             <ScrollReveal delay={0.2}>
               <form className="glass-card p-8">
                 <h3 className="font-orbitron text-xl font-semibold text-foreground mb-6">
@@ -159,7 +155,7 @@ const ContactPage: React.FC = () => {
         </div>
       </main>
 
-      {/* Bottom Bar */}
+      {/* Simple Footer */}
       <footer className="border-t border-white/5 bg-card/50">
         <div className="container mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
