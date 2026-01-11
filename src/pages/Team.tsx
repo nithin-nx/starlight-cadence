@@ -1,8 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Linkedin, Github, Mail, X, Twitter, Globe, Phone, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Linkedin, Github, X, Phone, ChevronLeft, ChevronRight } from 'lucide-react';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 
@@ -400,12 +399,12 @@ const TeamPage: React.FC = () => {
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleMemberClick = (member: TeamMember) => {
+  const openModal = (member: TeamMember) => {
     setSelectedMember(member);
     setIsModalOpen(true);
   };
 
-  const handleCloseModal = () => {
+  const closeModal = () => {
     setIsModalOpen(false);
     setTimeout(() => setSelectedMember(null), 300);
   };
@@ -416,44 +415,33 @@ const TeamPage: React.FC = () => {
       
       <main className="pt-32 pb-20">
         <div className="container mx-auto px-6">
-          {/* Page Header */}
           <ScrollReveal className="text-center mb-16">
             <span className="inline-block px-4 py-2 text-xs font-medium tracking-[0.3em] uppercase text-primary border border-primary/30 rounded-full bg-primary/5 mb-4">
-              Crew
+              Our Team
             </span>
             <h1 className="font-orbitron text-4xl md:text-6xl font-bold text-foreground mb-4">
-              Our <span className="text-primary text-glow">Team</span>
+              Meet the <span className="text-primary text-glow">Crew</span>
             </h1>
             <p className="max-w-2xl mx-auto text-muted-foreground text-lg">
-              Meet the passionate individuals driving innovation at ISTE GECB. Click on any member to connect.
+              The passionate individuals behind ISTE GECB, working together to create amazing experiences.
             </p>
           </ScrollReveal>
 
-          {/* Executive Team */}
           <section className="mb-20">
             <ScrollReveal>
               <HorizontalScroll title="Executive" subtitle="Team">
                 {executiveTeam.map((member, index) => (
-                  <TeamCard 
-                    key={index} 
-                    member={member} 
-                    onClick={() => handleMemberClick(member)} 
-                  />
+                  <TeamCard key={index} member={member} onClick={() => openModal(member)} />
                 ))}
               </HorizontalScroll>
             </ScrollReveal>
           </section>
 
-          {/* Department Representatives */}
           <section>
             <ScrollReveal>
               <HorizontalScroll title="Department" subtitle="Representatives">
                 {departmentReps.map((member, index) => (
-                  <TeamCard 
-                    key={index} 
-                    member={member} 
-                    onClick={() => handleMemberClick(member)} 
-                  />
+                  <TeamCard key={index} member={member} onClick={() => openModal(member)} />
                 ))}
               </HorizontalScroll>
             </ScrollReveal>
@@ -461,13 +449,26 @@ const TeamPage: React.FC = () => {
         </div>
       </main>
 
-      <Footer />
-      
-      <TeamModal 
-        member={selectedMember} 
-        isOpen={isModalOpen} 
-        onClose={handleCloseModal} 
-      />
+      <TeamModal member={selectedMember} isOpen={isModalOpen} onClose={closeModal} />
+
+      {/* Simple Footer */}
+      <footer className="border-t border-white/5 bg-card/50">
+        <div className="container mx-auto px-6 py-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center">
+                <span className="font-orbitron font-bold text-primary text-sm">I</span>
+              </div>
+              <span className="font-orbitron font-medium text-sm text-foreground">
+                ISTE <span className="text-primary">GECB</span>
+              </span>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              © 2026 ISTE GEC Barton Hill. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };

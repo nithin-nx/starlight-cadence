@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Target, Users, Lightbulb, Award, BookOpen, Rocket } from 'lucide-react';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 
@@ -55,7 +54,6 @@ const AboutPage: React.FC = () => {
       
       <main className="pt-32 pb-20">
         <div className="container mx-auto px-6">
-          {/* Page Header */}
           <ScrollReveal className="text-center mb-16">
             <span className="inline-block px-4 py-2 text-xs font-medium tracking-[0.3em] uppercase text-primary border border-primary/30 rounded-full bg-primary/5 mb-4">
               About Us
@@ -69,7 +67,6 @@ const AboutPage: React.FC = () => {
             </p>
           </ScrollReveal>
 
-          {/* Stats Section */}
           <ScrollReveal className="mb-20">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {stats.map((stat, index) => (
@@ -87,7 +84,6 @@ const AboutPage: React.FC = () => {
             </div>
           </ScrollReveal>
 
-          {/* About Content */}
           <div className="grid lg:grid-cols-2 gap-16 mb-20">
             <ScrollReveal>
               <div className="space-y-6">
@@ -130,7 +126,6 @@ const AboutPage: React.FC = () => {
             </ScrollReveal>
           </div>
 
-          {/* Features Grid */}
           <section>
             <ScrollReveal className="text-center mb-12">
               <h2 className="font-orbitron text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -165,7 +160,24 @@ const AboutPage: React.FC = () => {
         </div>
       </main>
 
-      <Footer />
+      {/* Simple Footer */}
+      <footer className="border-t border-white/5 bg-card/50">
+        <div className="container mx-auto px-6 py-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center">
+                <span className="font-orbitron font-bold text-primary text-sm">I</span>
+              </div>
+              <span className="font-orbitron font-medium text-sm text-foreground">
+                ISTE <span className="text-primary">GECB</span>
+              </span>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              © 2026 ISTE GEC Barton Hill. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };

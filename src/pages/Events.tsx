@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Calendar, MapPin, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 
@@ -124,7 +123,6 @@ const EventCard: React.FC<EventCardProps> = ({ event, variant = 'upcoming' }) =>
       transition={{ duration: 0.3 }}
       className="glass-card overflow-hidden group cursor-pointer min-w-[320px] max-w-[360px] flex-shrink-0"
     >
-      {/* Event Image */}
       <div className="relative h-52 overflow-hidden">
         <motion.img 
           src={event.image} 
@@ -145,7 +143,6 @@ const EventCard: React.FC<EventCardProps> = ({ event, variant = 'upcoming' }) =>
         )}
       </div>
       
-      {/* Event Content */}
       <div className="p-6" style={{ transform: 'translateZ(30px)' }}>
         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
           <Calendar className="w-4 h-4 text-primary" />
@@ -202,7 +199,6 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({ children, title, su
 
   return (
     <div className="relative">
-      {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
           <h2 className="font-orbitron text-3xl md:text-4xl font-bold text-foreground">
@@ -210,7 +206,6 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({ children, title, su
           </h2>
         </div>
         
-        {/* Navigation Arrows */}
         <div className="flex gap-2">
           <motion.button
             onClick={() => scroll('left')}
@@ -231,7 +226,6 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({ children, title, su
         </div>
       </div>
       
-      {/* Scrollable Container */}
       <div 
         ref={scrollRef}
         className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide"
@@ -255,7 +249,6 @@ const EventsPage: React.FC = () => {
       
       <main className="pt-32 pb-20">
         <div className="container mx-auto px-6">
-          {/* Page Header */}
           <ScrollReveal className="text-center mb-16">
             <span className="inline-block px-4 py-2 text-xs font-medium tracking-[0.3em] uppercase text-primary border border-primary/30 rounded-full bg-primary/5 mb-4">
               Events
@@ -268,7 +261,6 @@ const EventsPage: React.FC = () => {
             </p>
           </ScrollReveal>
 
-          {/* Upcoming Events Section */}
           <section className="mb-20">
             <ScrollReveal>
               <HorizontalScroll title="Latest" subtitle="News">
@@ -279,7 +271,6 @@ const EventsPage: React.FC = () => {
             </ScrollReveal>
           </section>
 
-          {/* Past Events Section */}
           <section>
             <ScrollReveal>
               <HorizontalScroll title="Past" subtitle="Events">
@@ -292,7 +283,24 @@ const EventsPage: React.FC = () => {
         </div>
       </main>
 
-      <Footer />
+      {/* Simple Footer */}
+      <footer className="border-t border-white/5 bg-card/50">
+        <div className="container mx-auto px-6 py-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center">
+                <span className="font-orbitron font-bold text-primary text-sm">I</span>
+              </div>
+              <span className="font-orbitron font-medium text-sm text-foreground">
+                ISTE <span className="text-primary">GECB</span>
+              </span>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              © 2026 ISTE GEC Barton Hill. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
