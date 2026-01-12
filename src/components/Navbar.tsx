@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
 const navLinks = [
@@ -14,127 +14,197 @@ const navLinks = [
 export const Navbar: React.FC = () => {
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeLink, setActiveLink] = useState('Home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleLinkClick = (name: string) => {
-    setActiveLink(name);
+  // Close mobile menu on route change
+  useEffect(() => {
     setIsMobileMenuOpen(false);
-  };
+  }, [location.pathname]);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: [0.23, 0.86, 0.39, 0.96] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled ? 'glass-navbar py-3' : 'py-5 bg-transparent'
-      }`}
-    >
-      <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center">
-              <span className="font-orbitron font-bold text-primary text-lg">I</span>
-            </div>
-            <span className="font-orbitron font-bold text-xl tracking-wider text-foreground">
-              ISTE <span className="text-primary">GECB</span>
-            </span>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => {
-              const isActive = location.pathname === link.href;
-              return (
-                <Link
-                  key={link.name}
-                  to={link.href}
-                  onClick={() => handleLinkClick(link.name)}
-                  className={`relative px-4 py-2 text-sm font-medium uppercase tracking-wider transition-colors duration-300 ${
-                    isActive 
-                      ? 'text-primary' 
-                      : 'text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  {link.name}
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeIndicator"
-                      className="absolute bottom-0 left-2 right-2 h-0.5 bg-primary rounded-full"
-                      style={{ boxShadow: '0 0 10px hsl(185, 100%, 50%)' }}
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* CTA Button */}
-          <div className="hidden md:block">
-            <Link
-              to="/auth"
-              className="px-6 py-2.5 text-sm font-semibold uppercase tracking-wider bg-primary text-primary-foreground rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-primary/30"
-            >
-              Login
+    <>
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6, ease: [0.23, 0.86, 0.39, 0.96] }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled || isMobileMenuOpen ? 'glass-navbar py-3' : 'py-4 md:py-5 bg-transparent'
+        }`}
+      >
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-2 md:gap-3 z-10">
+              <div className="w-9 h-9 md:w-10 md:h-10 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center">
+                <span className="font-orbitron font-bold text-primary text-base md:text-lg">I</span>
+              </div>
+              <span className="font-orbitron font-bold text-lg md:text-xl tracking-wider text-foreground">
+                ISTE <span className="text-primary">GECB</span>
+              </span>
             </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center gap-1">
+              {navLinks.map((link) => {
+                const isActive = location.pathname === link.href;
+                return (
+                  <Link
+                    key={link.name}
+                    to={link.href}
+                    className={`relative px-4 py-2 text-sm font-medium uppercase tracking-wider transition-colors duration-300 ${
+                      isActive 
+                        ? 'text-primary' 
+                        : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    {link.name}
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeIndicator"
+                        className="absolute bottom-0 left-2 right-2 h-0.5 bg-primary rounded-full"
+                        style={{ boxShadow: '0 0 10px hsl(185, 100%, 50%)' }}
+                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* CTA Button - Desktop */}
+            <div className="hidden lg:block">
+              <Link
+                to="/auth"
+                className="px-6 py-2.5 text-sm font-semibold uppercase tracking-wider bg-primary text-primary-foreground rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-primary/30"
+              >
+                Login
+              </Link>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden p-2 text-foreground z-10 touch-manipulation"
+              aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+            >
+              <AnimatePresence mode="wait">
+                {isMobileMenuOpen ? (
+                  <motion.div
+                    key="close"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <X size={24} />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="menu"
+                    initial={{ rotate: 90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Menu size={24} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </button>
           </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 text-foreground"
-          >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </div>
+      </motion.nav>
 
-        {/* Mobile Menu */}
-        <motion.div
-          initial={false}
-          animate={{ 
-            height: isMobileMenuOpen ? 'auto' : 0,
-            opacity: isMobileMenuOpen ? 1 : 0 
-          }}
-          transition={{ duration: 0.3 }}
-          className="md:hidden overflow-hidden"
-        >
-          <div className="pt-6 pb-4 flex flex-col gap-2">
-            {navLinks.map((link, index) => (
-              <motion.div key={link.name}>
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 lg:hidden"
+          >
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-background/95 backdrop-blur-xl"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+            
+            {/* Menu Content */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+              className="relative pt-24 px-6 pb-8 h-full overflow-y-auto"
+            >
+              <nav className="flex flex-col gap-2">
+                {navLinks.map((link, index) => {
+                  const isActive = location.pathname === link.href;
+                  return (
+                    <motion.div
+                      key={link.name}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.3, delay: 0.1 + index * 0.05 }}
+                    >
+                      <Link
+                        to={link.href}
+                        className={`block px-4 py-4 text-lg font-medium uppercase tracking-wider rounded-xl transition-all duration-300 ${
+                          isActive 
+                            ? 'text-primary bg-primary/10 border border-primary/30' 
+                            : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
+                        }`}
+                      >
+                        {link.name}
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </nav>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.4 }}
+                className="mt-8"
+              >
                 <Link
-                  to={link.href}
-                  onClick={() => handleLinkClick(link.name)}
-                  className={`block px-4 py-3 text-sm font-medium uppercase tracking-wider rounded-lg transition-colors duration-300 ${
-                    location.pathname === link.href 
-                      ? 'text-primary bg-primary/10' 
-                      : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
-                  }`}
+                  to="/auth"
+                  className="block w-full px-6 py-4 text-center text-lg font-semibold uppercase tracking-wider bg-primary text-primary-foreground rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-primary/30"
                 >
-                  {link.name}
+                  Login / Sign Up
                 </Link>
               </motion.div>
-            ))}
-            <Link
-              to="/events"
-              className="mt-4 px-6 py-3 text-sm font-semibold uppercase tracking-wider bg-primary text-primary-foreground rounded-lg text-center block"
-            >
-              Join Us
-            </Link>
-          </div>
-        </motion.div>
-      </div>
-    </motion.nav>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
