@@ -12,16 +12,16 @@ const ContactPage: React.FC = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       
-      <main className="pt-32 pb-20">
-        <div className="container mx-auto px-6">
-          <ScrollReveal className="text-center mb-16">
-            <span className="inline-block px-4 py-2 text-xs font-medium tracking-[0.3em] uppercase text-primary border border-primary/30 rounded-full bg-primary/5 mb-4">
+      <main className="pt-24 sm:pt-32 pb-16 sm:pb-20">
+        <div className="container mx-auto px-4 sm:px-6">
+          <ScrollReveal className="text-center mb-10 sm:mb-16">
+            <span className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-medium tracking-[0.2em] sm:tracking-[0.3em] uppercase text-primary border border-primary/30 rounded-full bg-primary/5 mb-3 sm:mb-4">
               Contact
             </span>
-            <h1 className="font-orbitron text-4xl md:text-6xl font-bold text-foreground mb-4">
+            <h1 className="font-orbitron text-3xl sm:text-4xl md:text-6xl font-bold text-foreground mb-3 sm:mb-4">
               Get in <span className="text-primary text-glow">Touch</span>
             </h1>
-            <p className="max-w-2xl mx-auto text-muted-foreground text-lg">
+            <p className="max-w-2xl mx-auto text-muted-foreground text-sm sm:text-lg px-4">
               Have questions or want to collaborate? We'd love to hear from you.
             </p>
           </ScrollReveal>

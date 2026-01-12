@@ -87,15 +87,38 @@
 
   html {
     scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Orbitron', sans-serif;
+  }
+
+  /* Smooth scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground));
   }
 }
 
@@ -110,13 +133,13 @@
 
   /* Glassmorphism Navbar */
   .glass-navbar {
-    @apply bg-background/60 backdrop-blur-2xl border-b border-white/5;
+    @apply bg-background/80 backdrop-blur-2xl border-b border-white/5;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
   }
 
   /* Glowing Button */
   .btn-glow {
-    @apply relative bg-primary/10 border-2 border-primary text-primary font-semibold uppercase tracking-widest px-8 py-3 rounded-lg transition-all duration-300;
+    @apply relative bg-primary/10 border-2 border-primary text-primary font-semibold uppercase tracking-widest px-6 md:px-8 py-3 rounded-lg transition-all duration-300;
     text-shadow: 0 0 10px hsl(var(--primary) / 0.5);
   }
 
@@ -166,6 +189,16 @@
     @apply absolute bottom-0 h-0.5 bg-primary rounded-full transition-all duration-300;
     box-shadow: 0 0 10px hsl(var(--primary) / 0.8);
   }
+
+  /* Hide scrollbar for horizontal scroll containers */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @layer utilities {
@@ -186,6 +219,20 @@
     font-family: 'Orbitron', sans-serif;
   }
 
+  /* Touch manipulation for better mobile UX */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+
+  /* Safe area padding for mobile devices */
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
   /* Noise Overlay */
   .noise-overlay::before {
     content: '';
@@ -198,5 +245,20 @@
     opacity: 0.03;
     pointer-events: none;
     z-index: 1;
+  }
+
+  /* Line clamp utilities */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }
