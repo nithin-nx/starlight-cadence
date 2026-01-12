@@ -14,16 +14,294 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      certificates: {
+        Row: {
+          certificate_url: string | null
+          event_id: string | null
+          id: string
+          issued_at: string
+          issued_by: string | null
+          user_id: string | null
+        }
+        Insert: {
+          certificate_url?: string | null
+          event_id?: string | null
+          id?: string
+          issued_at?: string
+          issued_by?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          certificate_url?: string | null
+          event_id?: string | null
+          id?: string
+          issued_at?: string
+          issued_by?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "certificates_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      events: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          date: string
+          description: string | null
+          id: string
+          image_url: string | null
+          is_upcoming: boolean
+          location: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          date: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_upcoming?: boolean
+          location?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          date?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_upcoming?: boolean
+          location?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      financial_records: {
+        Row: {
+          amount: number
+          created_at: string
+          created_by: string | null
+          date: string
+          description: string | null
+          id: string
+          title: string
+          type: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          created_by?: string | null
+          date?: string
+          description?: string | null
+          id?: string
+          title: string
+          type: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          created_by?: string | null
+          date?: string
+          description?: string | null
+          id?: string
+          title?: string
+          type?: string
+        }
+        Relationships: []
+      }
+      gallery: {
+        Row: {
+          created_at: string
+          event_id: string | null
+          id: string
+          image_url: string
+          title: string | null
+          uploaded_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_id?: string | null
+          id?: string
+          image_url: string
+          title?: string | null
+          uploaded_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_id?: string | null
+          id?: string
+          image_url?: string
+          title?: string | null
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "gallery_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      membership_applications: {
+        Row: {
+          created_at: string
+          department: string | null
+          email: string
+          full_name: string
+          id: string
+          phone: string | null
+          reason: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          user_id: string | null
+          year_of_study: string | null
+        }
+        Insert: {
+          created_at?: string
+          department?: string | null
+          email: string
+          full_name: string
+          id?: string
+          phone?: string | null
+          reason?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          user_id?: string | null
+          year_of_study?: string | null
+        }
+        Update: {
+          created_at?: string
+          department?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          phone?: string | null
+          reason?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          user_id?: string | null
+          year_of_study?: string | null
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          message: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          message: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          message?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          department: string | null
+          email: string | null
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          department?: string | null
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          department?: string | null
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          assigned_at: string
+          assigned_by: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          assigned_at?: string
+          assigned_by?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          assigned_at?: string
+          assigned_by?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_elevated_role: { Args: { _user_id: string }; Returns: boolean }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_faculty: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "public" | "execome" | "treasure" | "faculty"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +428,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["public", "execome", "treasure", "faculty"],
+    },
   },
 } as const
