@@ -82,12 +82,12 @@ export const Navbar: React.FC = () => {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <a
-              href="#join"
+            <Link
+              to="/auth"
               className="px-6 py-2.5 text-sm font-semibold uppercase tracking-wider bg-primary text-primary-foreground rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-primary/30"
             >
-              Join Us
-            </a>
+              Login
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
