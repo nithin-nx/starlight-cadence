@@ -48,63 +48,26 @@ export const Navbar: React.FC = () => {
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.23, 0.86, 0.39, 0.96] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled || isMobileMenuOpen ? 'glass-navbar py-3' : 'py-4 md:py-5 bg-transparent'
+          isScrolled || isMobileMenuOpen ? 'bg-background/95 backdrop-blur-md border-b border-border/40 py-3' : 'py-4 md:py-5 bg-transparent'
         }`}
       >
         <div className="container mx-auto px-4 md:px-6">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-2 md:gap-3 z-10">
-              <div className="w-9 h-9 md:w-10 md:h-10 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center">
-                <span className="font-orbitron font-bold text-primary text-base md:text-lg">I</span>
+          {/* Mobile Layout */}
+          <div className="flex md:hidden items-center justify-between">
+            {/* Logo - Mobile */}
+            <Link to="/" className="flex items-center gap-2 z-10">
+              <div className="w-9 h-9 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center">
+                <span className="font-orbitron font-bold text-primary text-base">I</span>
               </div>
-              <span className="font-orbitron font-bold text-lg md:text-xl tracking-wider text-foreground">
+              <span className="font-orbitron font-bold text-lg tracking-wider text-foreground">
                 ISTE <span className="text-primary">GECB</span>
               </span>
             </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-1">
-              {navLinks.map((link) => {
-                const isActive = location.pathname === link.href;
-                return (
-                  <Link
-                    key={link.name}
-                    to={link.href}
-                    className={`relative px-4 py-2 text-sm font-medium uppercase tracking-wider transition-colors duration-300 ${
-                      isActive 
-                        ? 'text-primary' 
-                        : 'text-muted-foreground hover:text-foreground'
-                    }`}
-                  >
-                    {link.name}
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeIndicator"
-                        className="absolute bottom-0 left-2 right-2 h-0.5 bg-primary rounded-full"
-                        style={{ boxShadow: '0 0 10px hsl(185, 100%, 50%)' }}
-                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                      />
-                    )}
-                  </Link>
-                );
-              })}
-            </div>
-
-            {/* CTA Button - Desktop */}
-            <div className="hidden lg:block">
-              <Link
-                to="/auth"
-                className="px-6 py-2.5 text-sm font-semibold uppercase tracking-wider bg-primary text-primary-foreground rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-primary/30"
-              >
-                Login
-              </Link>
-            </div>
-
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button - Only for phones */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 text-foreground z-10 touch-manipulation"
+              className="p-2 text-foreground z-10 touch-manipulation"
               aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             >
               <AnimatePresence mode="wait">
@@ -132,10 +95,49 @@ export const Navbar: React.FC = () => {
               </AnimatePresence>
             </button>
           </div>
+
+          {/* Desktop Layout - Horizontal Navbar with Separators */}
+          <div className="hidden md:flex items-center justify-center w-full">
+            <div className="flex items-center bg-background/95 backdrop-blur-md border border-border/40 rounded-lg px-1 py-1.5">
+              {navLinks.map((link, index) => {
+                const isActive = location.pathname === link.href;
+                return (
+                  <React.Fragment key={link.name}>
+                    <Link
+                      to={link.href}
+                      className={`px-3 py-1.5 text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
+                        isActive 
+                          ? 'text-foreground' 
+                          : 'text-muted-foreground hover:text-foreground'
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
+                    {index < navLinks.length - 1 && (
+                      <div className="h-5 w-px bg-border/50 mx-0.5" />
+                    )}
+                  </React.Fragment>
+                );
+              })}
+              {/* Separator before Login */}
+              <div className="h-5 w-px bg-border/50 mx-1" />
+              <Link
+                to="/auth"
+                className={`px-3 py-1.5 text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
+                  location.pathname === '/auth'
+                    ? 'text-foreground'
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                Login
+              </Link>
+            </div>
+          </div>
+
         </div>
       </motion.nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay - Only for phones */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -143,7 +145,7 @@ export const Navbar: React.FC = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 lg:hidden"
+            className="fixed inset-0 z-40 md:hidden"
           >
             {/* Backdrop */}
             <motion.div
