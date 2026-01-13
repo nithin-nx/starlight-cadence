@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
+import DashboardSidebar from "./DashboardSidebar";
 
 interface FinancialRecord {
   id: string;
@@ -139,6 +140,16 @@ const TreasureDashboard: React.FC = () => {
           </div>
         </div>
       </div>
+      <div className="flex">
+      <DashboardSidebar />
+
+      <main className="flex-1 p-6">
+        <h1 className="text-2xl font-orbitron text-primary">
+          Execom Dashboard
+        </h1>
+        {/* Page content */}
+      </main>
+    </div>
 
       {/* Tabs */}
       <div className="flex flex-wrap gap-2 mb-8">

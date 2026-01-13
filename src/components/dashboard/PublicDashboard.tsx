@@ -8,6 +8,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
+import DashboardSidebar from "./DashboardSidebar";
+import DashboardLayout from '@/layouts/DashboardLayout';
 
 interface Profile {
   full_name: string | null;
@@ -149,6 +151,21 @@ const PublicDashboard: React.FC = () => {
           Sign Out
         </Button>
       </div>
+      <div className="flex">
+      <DashboardSidebar role="public" />
+
+      <main className="flex-1 p-6">
+        <h1 className="text-2xl font-orbitron text-primary">
+          Execom Dashboard
+        </h1>
+        {/* Page content */}
+      </main>
+    </div>
+    <DashboardLayout allowedRoles={["public"]}>
+      <div className="p-6">
+        {/* Your public dashboard content */}
+      </div>
+    </DashboardLayout>
 
       {/* Tabs */}
       <div className="flex flex-wrap gap-2 mb-8">

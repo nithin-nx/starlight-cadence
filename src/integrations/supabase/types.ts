@@ -16,7 +16,7 @@ export type Database = {
     Tables: {
       certificates: {
         Row: {
-          certificate_url: string | null
+          certificate_url: string
           event_id: string | null
           id: string
           issued_at: string
@@ -24,7 +24,7 @@ export type Database = {
           user_id: string | null
         }
         Insert: {
-          certificate_url?: string | null
+          certificate_url: string
           event_id?: string | null
           id?: string
           issued_at?: string
@@ -32,7 +32,7 @@ export type Database = {
           user_id?: string | null
         }
         Update: {
-          certificate_url?: string | null
+          certificate_url?: string
           event_id?: string | null
           id?: string
           issued_at?: string
@@ -42,6 +42,47 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "certificates_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      event_participants: {
+        Row: {
+          department: string | null
+          email: string
+          event_id: string
+          full_name: string
+          id: string
+          registered_at: string
+          registered_by: string | null
+          user_id: string | null
+        }
+        Insert: {
+          department?: string | null
+          email: string
+          event_id: string
+          full_name: string
+          id?: string
+          registered_at?: string
+          registered_by?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          department?: string | null
+          email?: string
+          event_id?: string
+          full_name?: string
+          id?: string
+          registered_at?: string
+          registered_by?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_participants_event_id_fkey"
             columns: ["event_id"]
             isOneToOne: false
             referencedRelation: "events"
@@ -201,6 +242,62 @@ export type Database = {
         }
         Relationships: []
       }
+      memberships: {
+        Row: {
+          application_id: string | null
+          approved_by: string | null
+          branch: string | null
+          created_at: string
+          department: string | null
+          email: string
+          full_name: string
+          id: string
+          joined_at: string
+          membership_id: string | null
+          phone: string | null
+          user_id: string | null
+          year_of_study: string | null
+        }
+        Insert: {
+          application_id?: string | null
+          approved_by?: string | null
+          branch?: string | null
+          created_at?: string
+          department?: string | null
+          email: string
+          full_name: string
+          id?: string
+          joined_at?: string
+          membership_id?: string | null
+          phone?: string | null
+          user_id?: string | null
+          year_of_study?: string | null
+        }
+        Update: {
+          application_id?: string | null
+          approved_by?: string | null
+          branch?: string | null
+          created_at?: string
+          department?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          joined_at?: string
+          membership_id?: string | null
+          phone?: string | null
+          user_id?: string | null
+          year_of_study?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "memberships_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: true
+            referencedRelation: "membership_applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       notifications: {
         Row: {
           created_at: string
@@ -230,6 +327,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          avatar_url: string | null
           created_at: string
           department: string | null
           email: string | null
@@ -240,6 +338,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          avatar_url?: string | null
           created_at?: string
           department?: string | null
           email?: string | null
@@ -250,6 +349,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          avatar_url?: string | null
           created_at?: string
           department?: string | null
           email?: string | null
@@ -290,18 +390,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      has_elevated_role: { Args: { _user_id: string }; Returns: boolean }
+      has_elevated_role: { Args: { uid: string }; Returns: boolean }
       has_role: {
-        Args: {
-          _role: Database["public"]["Enums"]["app_role"]
-          _user_id: string
-        }
+        Args: { r: Database["public"]["Enums"]["app_role"]; uid: string }
         Returns: boolean
       }
-      is_faculty: { Args: { _user_id: string }; Returns: boolean }
+      is_faculty: { Args: { uid: string }; Returns: boolean }
     }
     Enums: {
-      app_role: "public" | "execome" | "treasure" | "faculty"
+      app_role: "public" | "execom" | "treasure" | "faculty"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -429,7 +526,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["public", "execome", "treasure", "faculty"],
+      app_role: ["public", "execom", "treasure", "faculty"],
     },
   },
 } as const

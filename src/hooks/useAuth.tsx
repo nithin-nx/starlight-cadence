@@ -1,8 +1,9 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@/integrations/supabase/client';
+import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { User, Session } from "@supabase/supabase-js";
+import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom";
 
-type AppRole = 'public' | 'execome' | 'treasure' | 'faculty';
+type AppRole = "public" | "execome" | "treasure" | "faculty";
 
 interface AuthContextType {
   user: User | null;
@@ -20,6 +21,8 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
@@ -27,30 +30,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchUserRole = async (userId: string) => {
     const { data, error } = await supabase
-      .from('user_roles')
-      .select('role')
-      .eq('user_id', userId)
-      .order('role', { ascending: false })
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", userId)
+      .order("role", { ascending: false })
       .limit(1)
       .maybeSingle();
-    
+
     if (!error && data) {
-      // Priority: faculty > treasure > execome > public
       setRole(data.role as AppRole);
     } else {
-      setRole('public');
+      setRole("public");
     }
   };
 
   useEffect(() => {
-    // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      (_event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
-        
+
         if (session?.user) {
-          // Defer Supabase calls with setTimeout
           setTimeout(() => {
             fetchUserRole(session.user.id);
           }, 0);
@@ -61,11 +61,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     );
 
-    // THEN check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
-      
+
       if (session?.user) {
         fetchUserRole(session.user.id);
       }
@@ -77,7 +76,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signUp = async (email: string, password: string, fullName?: string) => {
     const redirectUrl = `${window.location.origin}/`;
-    
+
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -88,7 +87,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
       }
     });
-    
+
     return { error: error as Error | null };
   };
 
@@ -97,35 +96,38 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       email,
       password
     });
-    
+
     return { error: error as Error | null };
   };
 
   const signOut = async () => {
     await supabase.auth.signOut();
     setRole(null);
+    navigate("/", { replace: true });
   };
 
   const hasRole = (checkRole: AppRole) => role === checkRole;
-  
-  const hasElevatedRole = () => 
-    role === 'execome' || role === 'treasure' || role === 'faculty';
-  
-  const isFaculty = () => role === 'faculty';
+
+  const hasElevatedRole = () =>
+    role === "execome" || role === "treasure" || role === "faculty";
+
+  const isFaculty = () => role === "faculty";
 
   return (
-    <AuthContext.Provider value={{
-      user,
-      session,
-      loading,
-      role,
-      signUp,
-      signIn,
-      signOut,
-      hasRole,
-      hasElevatedRole,
-      isFaculty
-    }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        session,
+        loading,
+        role,
+        signUp,
+        signIn,
+        signOut,
+        hasRole,
+        hasElevatedRole,
+        isFaculty
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -134,7 +136,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };

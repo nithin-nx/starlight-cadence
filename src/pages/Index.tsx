@@ -68,14 +68,14 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      
+
       {/* Hero Section */}
       <main id="home">
-        <FuturisticAlienHero 
+        <FuturisticAlienHero
           title="ISTE"
-          subtitle="GEC IDUKKI"
+          subtitle="GEC Idukki Student Chapter"
           ctaText="Join Chapter"
-          ctaHref="/events"
+          ctaHref="/join-iste"
         />
       </main>
 
@@ -126,10 +126,13 @@ const Index = () => {
       </section>
 
       {/* Events Preview Section */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-card/30">
         <div className="container mx-auto px-6">
           <ScrollReveal className="flex items-center justify-between mb-12">
             <div>
+              <span className="inline-block px-4 py-2 text-xs font-medium tracking-[0.3em] uppercase text-primary border border-primary/30 rounded-full bg-primary/5 mb-4">
+                Upcoming
+              </span>
               <h2 className="font-orbitron text-3xl md:text-5xl font-bold text-foreground">
                 Latest <span className="text-primary text-glow">Events</span>
               </h2>
@@ -148,29 +151,29 @@ const Index = () => {
             {upcomingEvents.map((event, index) => (
               <ScrollReveal key={event.id} delay={0.1 * index}>
                 <motion.div
-                  whileHover={{ 
+                  whileHover={{
                     y: -10,
                     boxShadow: '0 25px 50px -12px hsl(var(--primary) / 0.25)'
                   }}
-                  className="bg-card border border-border/40 rounded-xl overflow-hidden group cursor-pointer"
+                  className="glass-card overflow-hidden group cursor-pointer"
                 >
                   <div className="relative h-48 overflow-hidden">
-                    <img 
-                      src={event.image} 
+                    <img
+                      src={event.image}
                       alt={event.title}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" />
-                    <span className="absolute top-4 left-4 px-3 py-1 text-xs font-semibold uppercase tracking-wider bg-primary text-primary-foreground rounded-full">
+                    <span className="absolute top-4 left-4 px-3 py-1 text-xs font-medium uppercase tracking-wider bg-primary text-primary-foreground rounded-full">
                       {event.category}
                     </span>
                   </div>
-                  <div className="p-5 bg-card">
-                    <div className="flex items-center gap-2 text-sm text-primary mb-2">
-                      <Calendar className="w-4 h-4" />
+                  <div className="p-5">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                      <Calendar className="w-4 h-4 text-primary" />
                       {event.date}
                     </div>
-                    <h3 className="font-semibold text-lg text-foreground">
+                    <h3 className="font-orbitron text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
                       {event.title}
                     </h3>
                   </div>
@@ -195,19 +198,19 @@ const Index = () => {
       {/* Team Preview Section */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-6">
-          <ScrollReveal className="flex items-start justify-between mb-12">
-            <div className="flex-1">
-              <span className="inline-block px-4 py-2 text-xs font-semibold tracking-wider uppercase text-foreground border border-primary rounded-lg bg-transparent mb-4">
-                OUR TEAM
+          <ScrollReveal className="flex items-center justify-between mb-12">
+            <div>
+              <span className="inline-block px-4 py-2 text-xs font-medium tracking-[0.3em] uppercase text-primary border border-primary/30 rounded-full bg-primary/5 mb-4">
+                Our Team
               </span>
               <h2 className="font-orbitron text-3xl md:text-5xl font-bold text-foreground">
                 Meet the <span className="text-primary text-glow">Crew</span>
               </h2>
             </div>
-            <Link to="/team" className="hidden md:block">
+            <Link to="/team">
               <motion.span
                 whileHover={{ x: 5 }}
-                className="inline-flex items-center gap-2 text-primary font-medium hover:underline"
+                className="hidden md:inline-flex items-center gap-2 text-primary font-medium hover:underline"
               >
                 View full team <ArrowRight className="w-4 h-4" />
               </motion.span>
@@ -218,23 +221,28 @@ const Index = () => {
             {teamPreview.map((member, index) => (
               <ScrollReveal key={index} delay={0.1 * index}>
                 <motion.div
-                  whileHover={{ 
+                  whileHover={{
                     y: -10,
                     boxShadow: '0 20px 40px -15px hsl(var(--primary) / 0.3)'
                   }}
-                  className="bg-card border border-border/40 rounded-xl p-5 text-center group cursor-pointer"
+                  className="glass-card p-5 text-center group cursor-pointer"
                 >
-                  <div className="relative w-24 h-24 md:w-28 md:h-28 mx-auto mb-4">
+                  <div className="relative w-20 h-20 md:w-24 md:h-24 mx-auto mb-4">
+                    <motion.div
+                      className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary to-secondary blur-lg"
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 0.6 }}
+                    />
                     <img
                       src={member.image}
                       alt={member.name}
-                      className="w-full h-full object-cover rounded-full border-2 border-border/40 group-hover:border-primary/50 transition-all"
+                      className="relative w-full h-full object-cover rounded-2xl border-2 border-white/10 group-hover:border-primary/50 transition-all"
                     />
                   </div>
-                  <h3 className="font-semibold text-base md:text-lg text-foreground mb-1">
+                  <h3 className="font-orbitron text-sm md:text-base font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">
                     {member.name}
                   </h3>
-                  <p className="text-primary text-sm font-medium">
+                  <p className="text-primary text-xs md:text-sm font-medium">
                     {member.role}
                   </p>
                 </motion.div>
@@ -256,11 +264,11 @@ const Index = () => {
       </section>
 
       {/* Contact Preview Section */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-card/30">
         <div className="container mx-auto px-6">
           <ScrollReveal className="text-center mb-12">
-            <span className="inline-block px-4 py-2 text-xs font-semibold tracking-wider uppercase text-foreground border border-primary rounded-lg bg-transparent mb-4">
-              CONTACT
+            <span className="inline-block px-4 py-2 text-xs font-medium tracking-[0.3em] uppercase text-primary border border-primary/30 rounded-full bg-primary/5 mb-4">
+              Contact
             </span>
             <h2 className="font-orbitron text-3xl md:text-5xl font-bold text-foreground mb-4">
               Get in <span className="text-primary text-glow">Touch</span>
@@ -274,35 +282,35 @@ const Index = () => {
             <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-8">
               <motion.div
                 whileHover={{ y: -5 }}
-                className="bg-card border border-border/40 rounded-xl p-6 text-center"
+                className="glass-card p-6 text-center"
               >
-                <div className="w-12 h-12 rounded-lg border border-primary flex items-center justify-center mx-auto mb-4">
-                  <Mail className="w-5 h-5 text-foreground" />
+                <div className="w-12 h-12 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center mx-auto mb-4">
+                  <Mail className="w-5 h-5 text-primary" />
                 </div>
-                <h3 className="font-semibold text-foreground mb-2">Email</h3>
-                <p className="text-foreground text-sm">contact@istegecb.in</p>
+                <h3 className="font-orbitron font-semibold text-foreground mb-2">Email</h3>
+                <p className="text-muted-foreground text-sm">contact@istegecb.in</p>
               </motion.div>
 
               <motion.div
                 whileHover={{ y: -5 }}
-                className="bg-card border border-border/40 rounded-xl p-6 text-center"
+                className="glass-card p-6 text-center"
               >
-                <div className="w-12 h-12 rounded-lg border border-primary flex items-center justify-center mx-auto mb-4">
-                  <Target className="w-5 h-5 text-foreground" />
+                <div className="w-12 h-12 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center mx-auto mb-4">
+                  <Target className="w-5 h-5 text-primary" />
                 </div>
-                <h3 className="font-semibold text-foreground mb-2">Location</h3>
-                <p className="text-foreground text-sm">GEC Barton Hill, Kerala</p>
+                <h3 className="font-orbitron font-semibold text-foreground mb-2">Location</h3>
+                <p className="text-muted-foreground text-sm">GEC Barton Hill, Kerala</p>
               </motion.div>
 
               <motion.div
                 whileHover={{ y: -5 }}
-                className="bg-card border border-border/40 rounded-xl p-6 text-center"
+                className="glass-card p-6 text-center"
               >
-                <div className="w-12 h-12 rounded-lg border border-primary flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-5 h-5 text-foreground" />
+                <div className="w-12 h-12 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-5 h-5 text-primary" />
                 </div>
-                <h3 className="font-semibold text-foreground mb-2">Community</h3>
-                <p className="text-foreground text-sm">500+ Active Members</p>
+                <h3 className="font-orbitron font-semibold text-foreground mb-2">Community</h3>
+                <p className="text-muted-foreground text-sm">500+ Active Members</p>
               </motion.div>
             </div>
           </ScrollReveal>
@@ -312,9 +320,9 @@ const Index = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-3 rounded-lg border-2 border-primary text-foreground font-semibold uppercase tracking-wider bg-transparent hover:bg-primary/10 transition-all"
+                className="btn-glow"
               >
-                CONTACT US <ArrowRight className="w-4 h-4 ml-2 inline" />
+                Contact Us <ArrowRight className="w-4 h-4 ml-2 inline" />
               </motion.button>
             </Link>
           </ScrollReveal>

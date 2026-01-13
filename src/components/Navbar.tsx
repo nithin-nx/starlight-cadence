@@ -24,12 +24,10 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location.pathname]);
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -48,26 +46,66 @@ export const Navbar: React.FC = () => {
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.23, 0.86, 0.39, 0.96] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled || isMobileMenuOpen ? 'bg-background/95 backdrop-blur-md border-b border-border/40 py-3' : 'py-4 md:py-5 bg-transparent'
+          isScrolled || isMobileMenuOpen 
+            ? 'bg-background/95 backdrop-blur-md border-b border-border/40 py-3' 
+            : 'py-5 bg-transparent'
         }`}
       >
-        <div className="container mx-auto px-4 md:px-6">
-          {/* Mobile Layout */}
-          <div className="flex md:hidden items-center justify-between">
-            {/* Logo - Mobile */}
-            <Link to="/" className="flex items-center gap-2 z-10">
-              <div className="w-9 h-9 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center">
-                <span className="font-orbitron font-bold text-primary text-base">I</span>
-              </div>
-              <span className="font-orbitron font-bold text-lg tracking-wider text-foreground">
-                ISTE <span className="text-primary">GECB</span>
+        <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
+          
+          {/* LOGO - Now visible on both Mobile and Desktop */}
+          <Link to="/" className="flex items-center gap-2 z-10">
+            <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center shadow-lg shadow-primary/10">
+              <span className="font-orbitron font-bold text-primary text-xl">I</span>
+            </div>
+            <div className="flex flex-col leading-tight">
+              <span className="font-orbitron font-bold text-lg md:text-xl tracking-wider text-foreground">
+                ISTE <span className="text-primary">GECI</span>
               </span>
+            </div>
+          </Link>
+
+          {/* DESKTOP NAVIGATION - Centered Menu Model */}
+          <div className="hidden md:flex items-center bg-background/50 backdrop-blur-sm border border-border/40 rounded-full px-2 py-1">
+            {navLinks.map((link, index) => {
+              const isActive = location.pathname === link.href;
+              return (
+                <React.Fragment key={link.name}>
+                  <Link
+                    to={link.href}
+                    className={`px-4 py-1.5 text-sm font-medium transition-colors duration-200 whitespace-nowrap rounded-full ${
+                      isActive 
+                        ? 'text-primary bg-primary/10' 
+                        : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                  {index < navLinks.length - 1 && (
+                    <div className="h-4 w-px bg-border/50 mx-1" />
+                  )}
+                </React.Fragment>
+              );
+            })}
+          </div>
+
+          {/* DESKTOP ACTION / MOBILE TOGGLE */}
+          <div className="flex items-center gap-4">
+            <Link
+              to="/auth"
+              className={`hidden md:block px-6 py-2 rounded-full text-sm font-bold transition-all duration-300 ${
+                location.pathname === '/auth'
+                  ? 'bg-primary text-white'
+                  : 'bg-foreground text-background hover:bg-primary hover:text-white'
+              }`}
+            >
+              Login
             </Link>
 
-            {/* Mobile Menu Button - Only for phones */}
+            {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 text-foreground z-10 touch-manipulation"
+              className="md:hidden p-2 text-foreground z-10 touch-manipulation"
               aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             >
               <AnimatePresence mode="wait">
@@ -96,48 +134,10 @@ export const Navbar: React.FC = () => {
             </button>
           </div>
 
-          {/* Desktop Layout - Horizontal Navbar with Separators */}
-          <div className="hidden md:flex items-center justify-center w-full">
-            <div className="flex items-center bg-background/95 backdrop-blur-md border border-border/40 rounded-lg px-1 py-1.5">
-              {navLinks.map((link, index) => {
-                const isActive = location.pathname === link.href;
-                return (
-                  <React.Fragment key={link.name}>
-                    <Link
-                      to={link.href}
-                      className={`px-3 py-1.5 text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
-                        isActive 
-                          ? 'text-foreground' 
-                          : 'text-muted-foreground hover:text-foreground'
-                      }`}
-                    >
-                      {link.name}
-                    </Link>
-                    {index < navLinks.length - 1 && (
-                      <div className="h-5 w-px bg-border/50 mx-0.5" />
-                    )}
-                  </React.Fragment>
-                );
-              })}
-              {/* Separator before Login */}
-              <div className="h-5 w-px bg-border/50 mx-1" />
-              <Link
-                to="/auth"
-                className={`px-3 py-1.5 text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
-                  location.pathname === '/auth'
-                    ? 'text-foreground'
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                Login
-              </Link>
-            </div>
-          </div>
-
         </div>
       </motion.nav>
 
-      {/* Mobile Menu Overlay - Only for phones */}
+      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -147,7 +147,6 @@ export const Navbar: React.FC = () => {
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-40 md:hidden"
           >
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -156,7 +155,6 @@ export const Navbar: React.FC = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             />
             
-            {/* Menu Content */}
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
