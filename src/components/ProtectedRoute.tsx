@@ -5,7 +5,7 @@ import { useAuth } from "@/hooks/useAuth"
 
 
 type ProtectedRouteProps = {
-  role: "public" | "execom" | "treasure" | "faculty";
+  role: "public" | "execom" | "treasurer" | "faculty";
   children: ReactNode;
 };
 

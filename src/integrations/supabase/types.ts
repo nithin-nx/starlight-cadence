@@ -530,3 +530,21 @@ export const Constants = {
     },
   },
 } as const
+// Add to your existing types
+export interface SystemLog {
+  id: string;
+  action: string;
+  user_id: string;
+  user_email: string;
+  timestamp: string;
+  details: Record<string, any>;
+}
+
+export interface AdminAction {
+  id: string;
+  type: 'delete' | 'update' | 'create' | 'assign_role';
+  target: string;
+  performed_by: string;
+  performed_at: string;
+  reason?: string;
+}

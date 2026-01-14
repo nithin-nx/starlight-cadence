@@ -61,7 +61,7 @@ interface FinanceRow {
 ====================================================== */
 
 const FacultyDashboard: React.FC = () => {
-  const { user, signOut } = useAuth();
+  const { user, signOut, role } = useAuth();
 
   const [activeTab, setActiveTab] = useState<TabId>("users");
   const [users, setUsers] = useState<UserWithRole[]>([]);
@@ -224,7 +224,7 @@ const FacultyDashboard: React.FC = () => {
 
   return (
     <div className="flex min-h-screen">
-      <DashboardSidebar />
+      <DashboardSidebar role={role} />
 
       <main className="flex-1 p-6">
         {/* HEADER */}

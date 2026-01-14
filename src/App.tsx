@@ -46,9 +46,27 @@ import ExecomFinance from "@/pages/dashboard/execom/Finance";
 import ExecomProfile from "@/pages/dashboard/execom/Profile";
 import ExecomSettings from "@/pages/dashboard/execom/Settings";
 
-/* ================= TREASURER / FACULTY ================= */
+/* ================= TREASURER & FACULTY ================= */
 import TreasureDashboard from "@/components/dashboard/TreasureDashboard";
 import FacultyDashboard from "@/components/dashboard/FacultyDashboard";
+
+/* ================= ADMIN DASHBOARD ================= */
+import AdminLayout from "@/layouts/AdminLayout";
+import AdminOverview from "@/pages/dashboard/admin/Overview";
+import AdminEvents from "@/pages/dashboard/admin/Events";
+import AdminMembership from "@/pages/dashboard/admin/AdminMembership";
+import AdminParticipants from "@/pages/dashboard/admin/Participants";
+import AdminFinance from "@/pages/dashboard/admin/Finance";
+import AdminFinancialRecords from "@/pages/dashboard/admin/FinancialRecords";
+import AdminNotifications from "@/pages/dashboard/admin/Notifications";
+import AdminCertificates from "@/pages/dashboard/admin/Certificates";
+import AdminGallery from "@/pages/dashboard/admin/Gallery";
+import AdminProfile from "@/pages/dashboard/admin/Profile";
+import AdminSettings from "@/pages/dashboard/admin/Settings";
+import SystemMonitor from "@/pages/dashboard/admin/SystemMonitor";
+import ContentEditor from "@/pages/dashboard/admin/ContentEditor";
+import DataManager from "@/pages/dashboard/admin/DataManager";
+import RoleAssigner from "@/pages/dashboard/admin/RoleAssigner";
 
 const queryClient = new QueryClient();
 
@@ -116,17 +134,17 @@ const App = () => (
           <Route path="settings" element={<ExecomSettings />} />
         </Route>
 
-        {/* ===== TREASURER ===== */}
+        {/* ===== TREASURER DASHBOARD ===== */}
         <Route
           path="/dashboard/treasurer"
           element={
-            <ProtectedRoute role="treasure">
+            <ProtectedRoute role="treasurer">
               <TreasureDashboard />
             </ProtectedRoute>
           }
         />
 
-        {/* ===== FACULTY ===== */}
+        {/* ===== FACULTY DASHBOARD ===== */}
         <Route
           path="/dashboard/faculty"
           element={
@@ -135,6 +153,33 @@ const App = () => (
             </ProtectedRoute>
           }
         />
+
+        {/* ===== ADMIN DASHBOARD (Nested Layout) ===== */}
+        <Route
+          path="/dashboard/admin"
+          element={
+            <ProtectedRoute role="faculty">
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<AdminOverview />} />
+          <Route path="overview" element={<AdminOverview />} />
+          <Route path="events" element={<AdminEvents />} />
+          <Route path="membership" element={<AdminMembership />} />
+          <Route path="participants" element={<AdminParticipants />} />
+          <Route path="finance" element={<AdminFinance />} />
+          <Route path="financial-records" element={<AdminFinancialRecords />} />
+          <Route path="notifications" element={<AdminNotifications />} />
+          <Route path="certificates" element={<AdminCertificates />} />
+          <Route path="gallery" element={<AdminGallery />} />
+          <Route path="profile" element={<AdminProfile />} />
+          <Route path="settings" element={<AdminSettings />} />
+          <Route path="system-monitor" element={<SystemMonitor />} />
+          <Route path="content-editor" element={<ContentEditor />} />
+          <Route path="data-manager" element={<DataManager />} />
+          <Route path="role-assigner" element={<RoleAssigner />} />
+        </Route>
 
         {/* ===== FALLBACK ===== */}
         <Route path="*" element={<NotFound />} />

@@ -148,36 +148,25 @@ export const dashboardMenus = {
   ],
 
   /* ================= FACULTY (ADMIN) ================= */
-  faculty: [
-    {
-      label: "Admin Overview",
-      path: "/dashboard/faculty",
-      icon: LayoutDashboard,
-    },
-    {
-      label: "All Members",
-      path: "/dashboard/faculty/members",
-      icon: Users,
-    },
-    {
-      label: "Membership Approval",
-      path: "/dashboard/faculty/membership",
-      icon: Shield,
-    },
-    {
-      label: "Assign Roles",
-      path: "/dashboard/faculty/roles",
-      icon: Shield,
-    },
-    {
-      label: "System Monitor",
-      path: "/dashboard/faculty/system",
-      icon: FileText,
-    },
-    {
-      label: "Settings",
-      path: "/dashboard/faculty/settings",
-      icon: Settings,
-    },
-  ],
+  faculty: {
+    label: "Faculty Admin",
+    items: [
+      { icon: "🏠", label: "Overview", href: "/dashboard/admin/overview" },
+      { icon: "📅", label: "Events", href: "/dashboard/admin/events" },
+      { icon: "👥", label: "Members", href: "/dashboard/admin/membership" },
+      { icon: "💰", label: "Finance", href: "/dashboard/admin/finance" },
+      { icon: "📊", label: "Financial Records", href: "/dashboard/admin/financial-records" }, // NEW
+      { icon: "📢", label: "Notifications", href: "/dashboard/admin/notifications" },
+      { icon: "👤", label: "Participants", href: "/dashboard/admin/participants" },
+      { icon: "📜", label: "Certificates", href: "/dashboard/admin/certificates" },
+      { icon: "🖼️", label: "Gallery", href: "/dashboard/admin/gallery" },
+      // NEW ADMIN FEATURES:
+      { icon: "⚙️", label: "System Monitor", href: "/dashboard/admin/system-monitor" },
+      { icon: "📝", label: "Content Editor", href: "/dashboard/admin/content-editor" },
+      { icon: "🗑️", label: "Data Manager", href: "/dashboard/admin/data-manager" },
+      { icon: "👑", label: "Role Assigner", href: "/dashboard/admin/role-assigner" },
+      { icon: "⚙️", label: "Settings", href: "/dashboard/admin/settings" },
+      { icon: "👤", label: "Profile", href: "/dashboard/admin/profile" },
+    ]
+  },
 };
