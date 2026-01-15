@@ -37,7 +37,7 @@ const ContactPage: React.FC = () => {
                     <div>
                       <h3 className="font-orbitron font-semibold text-foreground mb-1">Email</h3>
                       <a href="mailto:contact@istegecb.in" className="text-muted-foreground hover:text-primary transition-colors">
-                        contact@istegecb.in
+                        contact@istegeci.in
                       </a>
                     </div>
                   </div>
@@ -52,8 +52,8 @@ const ContactPage: React.FC = () => {
                       <h3 className="font-orbitron font-semibold text-foreground mb-1">Address</h3>
                       <p className="text-muted-foreground">
                         Government Engineering College<br />
-                        Barton Hill, Thiruvananthapuram<br />
-                        Kerala - 695035
+                        ,Idukki<br />
+                        Kerala - 685603
                       </p>
                     </div>
                   </div>
@@ -67,7 +67,7 @@ const ContactPage: React.FC = () => {
                     <div>
                       <h3 className="font-orbitron font-semibold text-foreground mb-1">Phone</h3>
                       <a href="tel:+919876543210" className="text-muted-foreground hover:text-primary transition-colors">
-                        +91 98765 43210
+                        +91 9778043895
                       </a>
                     </div>
                   </div>
@@ -164,11 +164,11 @@ const ContactPage: React.FC = () => {
                 <span className="font-orbitron font-bold text-primary text-sm">I</span>
               </div>
               <span className="font-orbitron font-medium text-sm text-foreground">
-                ISTE <span className="text-primary">GECB</span>
+                ISTE <span className="text-primary">GECI</span>
               </span>
             </div>
             <p className="text-sm text-muted-foreground">
-              © 2026 ISTE GEC Barton Hill. All rights reserved.
+              © 2026 ISTE GEC Idukki. All rights reserved.
             </p>
           </div>
         </div>
