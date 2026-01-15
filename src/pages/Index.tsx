@@ -288,7 +288,7 @@ const Index = () => {
                   <Mail className="w-5 h-5 text-primary" />
                 </div>
                 <h3 className="font-orbitron font-semibold text-foreground mb-2">Email</h3>
-                <p className="text-muted-foreground text-sm">contact@istegecb.in</p>
+                <p className="text-muted-foreground text-sm">contact@istegeci.in</p>
               </motion.div>
 
               <motion.div
@@ -299,7 +299,7 @@ const Index = () => {
                   <Target className="w-5 h-5 text-primary" />
                 </div>
                 <h3 className="font-orbitron font-semibold text-foreground mb-2">Location</h3>
-                <p className="text-muted-foreground text-sm">GEC Barton Hill, Kerala</p>
+                <p className="text-muted-foreground text-sm">GEC Idukki, Kerala</p>
               </motion.div>
 
               <motion.div
